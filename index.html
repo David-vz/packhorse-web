@@ -93,7 +93,8 @@ body {
 		<link id="-gd-engine-icon" rel="icon" type="image/png" href="index.icon.png" />
 <link rel="apple-touch-icon" href="index.apple-touch-icon.png"/>
 
-	</head>
+	<script>(()=>{const on=new Set(),gone=new Set();let own=false;const send=(t,id)=>{const c=document.getElementById('canvas');if(!c)return;const e=new Event(t,{bubbles:true,cancelable:true});e.changedTouches=[{identifier:id,clientX:-99999,clientY:-99999}];own=true;try{c.dispatchEvent(e)}finally{own=false}};const drop=id=>{if(!on.delete(id))return;gone.add(id);send('touchmove',id);send('touchend',id)};const all=()=>{for(const id of [...on])drop(id)};const hear=(t,f)=>window.addEventListener(t,e=>{if(!own)f(e,Array.from(e.changedTouches).map(x=>x.identifier))},{capture:true,passive:false});hear('touchstart',(e,ids)=>{for(const id of ids){gone.delete(id);on.add(id)}});hear('touchmove',(e,ids)=>{if(ids.every(id=>gone.has(id)))e.stopImmediatePropagation()});hear('touchend',(e,ids)=>{if(ids.every(id=>gone.has(id)))e.stopImmediatePropagation();for(const id of ids){gone.delete(id);on.delete(id)}});hear('touchcancel',(e,ids)=>{e.stopImmediatePropagation();for(const id of ids){drop(id);gone.delete(id)}});window.addEventListener('blur',e=>{if(e.target===window)all()});window.addEventListener('pagehide',all);document.addEventListener('visibilitychange',()=>{if(document.hidden)all()})})()</script>
+</head>
 	<body>
 		<canvas id="canvas">
 			Your browser does not support the canvas tag.
